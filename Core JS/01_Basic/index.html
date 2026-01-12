@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="Hoisting.js"></script>
+    <title>Basic</title>
+  </head>
+
+  <body>
+    <h2>Core JS - Basic</h2>
+    <button id="btn">Click me</button>
+    <button id="btn1">Click me 2</button>
+    <script>
+      const btn = document.getElementById("btn");
+      const btn2 = document.getElementById("btn1");
+
+      btn.addEventListener("click", () => {
+        console.log("Clicked ");
+      });
+
+      btn2.addEventListener("click", () => {
+        setTimeout(() => {
+          console.log("Set Time Out");
+        }, 5000);
+      });
+      console.log("A");
+
+      console.log("B");
+    </script>
+  </body>
+</html>

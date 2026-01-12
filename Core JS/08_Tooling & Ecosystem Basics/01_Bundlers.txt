@@ -1,0 +1,37 @@
+In JavaScript, bundlers are tools that take all your project’s files (JavaScript, CSS, images, etc.), analyze how they depend on each other, and combine them into optimized bundles for the browser to load efficiently.
+
+Why do we need bundlers?
+
+Modern web apps use:
+- Many JS files (modules)
+- Third-party libraries (npm packages)
+- CSS files
+- Images / assets
+- TypeScript, JSX, SCSS, etc.
+
+Browsers can’t understand things like:
+- import/export across many module formats (especially older browsers)
+- TypeScript, JSX without compiling
+- SCSS without processing
+
+Bundlers solve this by:
+- Collecting all dependencies
+- Transforming code (JSX → JS, TS → JS)
+- Optimizing the output
+- Producing a small number of files the browser can load fast
+
+What bundlers actually do:
+
+- Module bundling
+- Transpiling
+- Minification
+- Asset handling
+- Code splitting
+
+Popular Bundlers for JavaScript and React:
+- Webpack
+- Vite
+- Parcel
+- Rollup
+- ESBuild
+- Snowpack
