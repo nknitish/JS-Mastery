@@ -538,7 +538,7 @@ const getFilteredMovies = (name = "", rating) => {
 
   if (name) {
     result = result.filter((m) =>
-      m.name.toLowerCase().includes(name.toLowerCase())
+      m.name.toLowerCase().includes(name.toLowerCase()),
     );
   }
   if (rating) {

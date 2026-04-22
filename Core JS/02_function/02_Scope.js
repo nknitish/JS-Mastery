@@ -2,7 +2,7 @@
 
 function printData() {
   function printb() {
-    console.log("inside printb", b);
+    console.log("inside print b", b);
   }
   printb();
   console.log("inside print", b);
@@ -12,7 +12,7 @@ var b = 10;
 printData();
 
 // Output:
-// inside printb 10
+// inside print b 10
 // inside print 10
 
 // Lexical environment is the local memory along with the lexical environment of its parent. This forms a scope chain.

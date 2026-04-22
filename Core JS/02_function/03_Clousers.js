@@ -34,6 +34,7 @@
 // In the above example, the functions pushed into the array form closures that capture the variable 'i' by reference. By the time these functions are called, the loop has completed and 'i' has a value of 3. Hence, all functions log 3.
 
 //-----------------------------------
+
 // function test() {
 //   console.log(a);
 //   var a = 5;
