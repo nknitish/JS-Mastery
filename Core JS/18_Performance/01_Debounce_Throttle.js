@@ -26,8 +26,8 @@ function throttle(fn, limit = 300) {
   };
 }
 
-const logDebounce = debounce(() => console.log('debounced'), 200);
-const logThrottle = throttle(() => console.log('throttled'), 200);
+const logDebounce = debounce(() => console.log("debounced"), 200);
+const logThrottle = throttle(() => console.log("throttled"), 200);
 
 logDebounce();
 logDebounce();

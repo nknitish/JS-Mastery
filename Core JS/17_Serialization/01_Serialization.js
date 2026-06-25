@@ -6,20 +6,20 @@ SERIALIZATION AND CLONING
 This file demonstrates JSON serialization, structuredClone, and a simple circular-safe clone.
 */
 
-const user = { name: 'Asha', age: 28, preferences: { theme: 'dark' } };
+const user = { name: "Asha", age: 28, preferences: { theme: "dark" } };
 const json = JSON.stringify(user);
-console.log('json', json);
+console.log("json", json);
 const restored = JSON.parse(json);
-console.log('restored', restored);
+console.log("restored", restored);
 
 const clone = structuredClone(user);
-console.log('structured clone', clone);
+console.log("structured clone", clone);
 
-const circular = { name: 'loop' };
+const circular = { name: "loop" };
 circular.self = circular;
 
 function deepCloneCircular(value, visited = new Map()) {
-  if (value === null || typeof value !== 'object') {
+  if (value === null || typeof value !== "object") {
     return value;
   }
   if (visited.has(value)) {
@@ -36,7 +36,10 @@ function deepCloneCircular(value, visited = new Map()) {
 }
 
 const circularClone = deepCloneCircular(circular);
-console.log('circularClone.self === circularClone', circularClone.self === circularClone);
+console.log(
+  "circularClone.self === circularClone",
+  circularClone.self === circularClone,
+);
 
 /*
 Explanation:

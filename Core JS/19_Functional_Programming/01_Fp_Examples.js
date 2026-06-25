@@ -34,7 +34,7 @@ const evens = numbers.filter((n) => n % 2 === 0);
 const sum = numbers.reduce((total, n) => total + n, 0);
 console.log(squared, evens, sum);
 
-const user = { name: 'Asha', age: 28 };
+const user = { name: "Asha", age: 28 };
 const updated = { ...user, age: 29 };
 console.log(user, updated);
 

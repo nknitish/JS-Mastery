@@ -26,13 +26,13 @@ function createPubSub() {
 }
 
 const bus = createPubSub();
-const unsubscribe = bus.subscribe('message', (data) => {
-  console.log('received', data);
+const unsubscribe = bus.subscribe("message", (data) => {
+  console.log("received", data);
 });
 
-bus.publish('message', { text: 'Hello' });
+bus.publish("message", { text: "Hello" });
 unsubscribe();
-bus.publish('message', { text: 'Ignored' });
+bus.publish("message", { text: "Ignored" });
 
 /*
 Explanation:
