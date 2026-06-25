@@ -1,0 +1,21 @@
+Webpack is a JavaScript bundler that starts from one or more entry points, resolves dependencies, and emits optimized output bundles.
+
+Key Webpack concepts:
+1. entry: the starting file(s) used to build the dependency graph.
+2. output: the final bundle location and file name pattern.
+3. loaders: transform files during bundling, such as transpiling TypeScript, compiling Sass, or converting images.
+4. plugins: customize bundler behavior for optimization, asset generation, and environment setup.
+
+Webpack is often used with:
+- babel-loader for modern JavaScript transpilation
+- css-loader and style-loader for CSS bundling
+- file-loader or asset modules for images/fonts
+- MiniCssExtractPlugin for separate CSS bundles
+
+Example configuration notes:
+- mode: 'development' or 'production'
+- devtool: 'source-map' for debugging
+- module.rules: use regex to match file types and apply loaders.
+
+Why it matters:
+Webpack allows large applications to ship efficient browser-ready bundles while preserving familiar module syntax and build-time optimizations.
