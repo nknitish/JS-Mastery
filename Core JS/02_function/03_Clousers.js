@@ -1,5 +1,7 @@
 //###################----Closures----#####################
 
+//javascript.info/closure
+
 // A closure is created when a function is defined inside another function, allowing the inner function to access the outer function's variables even after the outer function has finished executing.
 
 // var funcs = [];
@@ -76,19 +78,56 @@
 
 //-----------------------------------
 
-function topest() {
-  let str = "Hello";
-  function outer() {
-    let a = 10;
-    return function inner(b) {
-      console.log(str, a, b);
-    };
-  }
-  return outer;
-}
+// function topest() {
+//   let str = "Hello";
+//   function outer() {
+//     let a = 10;
+//     return function inner(b) {
+//       console.log(str, a, b);
+//     };
+//   }
+//   return outer;
+// }
 
-let a = 20;
-const fn = topest()();
-fn(12); // Output: 5 10
+// let a = 20;
+// const fn = topest()();
+// fn(12); // Output: 5 10
+
+//-----------------------------------
+// Filter inBetween
+
+let arr = [1, 2, 3, 4, 5, 6, 7];
+
+const inBetween = (a, b) => {
+  return (x) => {
+    return x >= a && x <= b;
+  };
+};
+
+const inArray = (arr) => {
+  return (n) => {
+    return arr.includes(n);
+  };
+};
+
+// console.log(arr.filter(inBetween(3, 6)));
+// console.log(arr.filter(inArray([1, 2, 10])));
+
+//-----------------------------------
+
+let users = [
+  { name: "John", age: 20, surname: "Johnson" },
+  { name: "Pete", age: 18, surname: "Peterson" },
+  { name: "Ann", age: 19, surname: "Hathaway" },
+];
+
+const byField = (filed) => {
+  return (a, b) => {
+    return a[filed] > b[filed] ? 1 : -1;
+  };
+};
+
+// console.log(users.sort(byField("name")));
+// console.log(users.sort(byField("age")));
 
 //-----------------------------------

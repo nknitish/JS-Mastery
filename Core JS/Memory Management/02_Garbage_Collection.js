@@ -11,8 +11,10 @@ This file explains reachability and why unreachable objects are collected.
 =========================================
 */
 
+// https://javascript.info/garbage-collection
+
 function garbageCollectionExample() {
-  const root = { name: 'root' };
+  const root = { name: "root" };
   const child = { parent: root };
   root.child = child;
 
@@ -33,7 +35,7 @@ Explanation:
 */
 
 function createLeak() {
-  const data = { huge: new Array(100000).fill('leak') };
+  const data = { huge: new Array(100000).fill("leak") };
 
   return function () {
     console.log(data.huge.length);

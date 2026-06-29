@@ -3,6 +3,9 @@
 PROPERTY DESCRIPTORS
 =========================================
 
+https://javascript.info/keys-values-entries?
+
+
 Property descriptors define how object properties behave: writability, enumerability, configurability, and accessors.
 
 This file shows how to inspect and define descriptors explicitly.
@@ -10,13 +13,13 @@ This file shows how to inspect and define descriptors explicitly.
 =========================================
 */
 
-const obj = { name: 'JavaScript' };
+const obj = { name: "JavaScript" };
 
-const descriptor = Object.getOwnPropertyDescriptor(obj, 'name');
+const descriptor = Object.getOwnPropertyDescriptor(obj, "name");
 console.log(descriptor);
 
-Object.defineProperty(obj, 'version', {
-  value: 'ES2023',
+Object.defineProperty(obj, "version", {
+  value: "ES2023",
   writable: false,
   enumerable: true,
   configurable: false,
@@ -25,9 +28,9 @@ Object.defineProperty(obj, 'version', {
 console.log(obj.version);
 
 try {
-  obj.version = 'ES2024';
+  obj.version = "ES2024";
 } catch (err) {
-  console.log('Cannot write to version');
+  console.log("Cannot write to version");
 }
 
 console.log(Object.keys(obj));
