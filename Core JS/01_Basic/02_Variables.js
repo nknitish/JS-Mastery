@@ -1,7 +1,8 @@
+//javascript.info/var
 //Temperroal Dead Zone (TDZ) is a behavior in JavaScript where variables declared with let and const cannot be accessed before their declaration within their scope. Attempting to do so results in a ReferenceError. This occurs because these variables are not hoisted like var declarations, and they remain in an uninitialized state from the start of their enclosing block until the line of code where they are declared.
 
 // Example of TDZ with let
-console.log(a); // ReferenceError: Cannot access 'a' before initialization
+https: console.log(a); // ReferenceError: Cannot access 'a' before initialization
 let a = 10;
 
 // Example of TDZ with const

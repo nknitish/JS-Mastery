@@ -1,3 +1,23 @@
+// https://javascript.info/promise-basics
+
+let promise = new Promise(function (resolve, reject) {
+  setTimeout(() => reject("done!"), 1000);
+});
+
+// resolve runs the first function in .then
+promise.then(
+  (result) => console.log(result), // shows "done!" after 1 second
+  (error) => console.log("Error", error), // doesn't run
+);
+
+// Order of finally mattes
+new Promise((resolve, reject) => {
+  setTimeout(() => resolve("value"), 2000);
+})
+  .finally(() => console.log("Promise ready")) // triggers first
+  .then((result) => console.log(result)); // <-- .then shows "value"
+
+//Task
 const createOrder = new Promise((res, rej) => {
   res("1");
 });
@@ -57,3 +77,5 @@ async function handlePrint() {
 //------------------------------------------
 
 Promise.all([delay(500), delay(200)]).then((res) => console.log(res));
+
+//https://javascript.info/promise-chaining
