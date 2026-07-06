@@ -9,17 +9,17 @@
 
 //----How to block main tread to get ABC
 
-function block(delay) {
-  let endTime = new Date().getTime() + delay;
-  while (new Date().getTime() < endTime) {}
-}
+// function block(delay) {
+//   let endTime = new Date().getTime() + delay;
+//   while (new Date().getTime() < endTime) {}
+// }
 
-console.log("A");
+// console.log("A");
 
-block(5000);
-setTimeout(() => console.log("Hello World"), 1000);
+// block(5000);
+// setTimeout(() => console.log("Hello World"), 1000);
 
-console.log("B");
+// console.log("B");
 
 //--------------------------------------------------
 function sleep(ms) {

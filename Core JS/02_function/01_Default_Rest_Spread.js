@@ -7,14 +7,12 @@ This file explains how to use default parameters, rest parameters, and the sprea
 */
 
 // Default parameters allow function arguments to have default values.
-function greet(name = 'Guest', greeting = 'Hello') {
+function greet(name = "Guest", greeting = "Hello") {
   console.log(`${greeting}, ${name}!`);
 }
 
 greet(); // Hello, Guest!
-greet('Asha'); // Hello, Asha!
-
-defaults:
+greet("Asha"); // Hello, Asha!
 
 // Rest parameters collect remaining arguments into an array.
 function sum(...values) {

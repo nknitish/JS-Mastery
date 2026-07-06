@@ -22,7 +22,7 @@ console.log(
 );
 console.log(
   "truthy:",
-  [1, "0", [], {}, () => {}].map((v) => Boolean(v)),
+  [1, " ", "0", [], {}, () => {}].map((v) => Boolean(v)),
 );
 
 // Short-circuit operators

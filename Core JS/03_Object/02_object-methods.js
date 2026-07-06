@@ -12,7 +12,6 @@ var user = {
 
 let admin = user;
 user = null; // overwrite to make things obvious
-
 admin.sayHi();
 
 // Arrow functions have no “this”

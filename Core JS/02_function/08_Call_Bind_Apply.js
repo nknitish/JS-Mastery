@@ -5,7 +5,7 @@
 
 const obj = {
   name: "Nitish",
-  getName: function (arg) {
+  getName: function (...arg) {
     console.log("My Name is ", this.name, " args ", arg);
   },
 };

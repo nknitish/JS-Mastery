@@ -14,7 +14,8 @@ function c() {
 }
 
 //Named Function Expression
-// https://javascript.info/function-object
+//https://javascript.info/function-object#named-function-expression
+
 const namedFunc = function named(n) {
   if (n === 10) return n;
   console.log("Named Function Expression", named(n + 1));
@@ -132,9 +133,11 @@ function sum(a) {
   return f;
 }
 
-// console.log(sum(5)(6)(8)(-4).result);
+console.log(sum(5)(6)(8)(-4).result);
 
 //-------------------------------------------
+
+// Currying
 
 function sum2(a) {
   let currentSum = a;

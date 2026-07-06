@@ -9,14 +9,14 @@ This file shows object creation patterns, destructuring, and JSON parsing/string
 // Object literal
 const user = { name: "Asha", age: 28 };
 
-// Factory function
+// Factory function // A factory function is simply a function that creates and returns an object.
 function createUser(name, age) {
   return { name, age, active: true };
 }
 
 const memoUser = createUser("Mia", 32);
 
-// Constructor function
+// Constructor function //A constructor function is a special function used with the new keyword to create objects.
 function Person(name, age) {
   this.name = name;
   this.age = age;
@@ -56,3 +56,17 @@ Explanation:
 - Destructuring extracts values from objects and arrays.
 - JSON methods are used for serialization and state transfer.
 */
+
+/**
+ * 
+ * | Feature           | Factory Function                        | Constructor Function                     |
+| ----------------- | --------------------------------------- | ---------------------------------------- |
+| Uses `new`        | ❌ No                                    | ✅ Yes                                    |
+| Returns object    | Manually                                | Automatically                            |
+| Uses `this`       | Optional                                | Yes                                      |
+| Prototype support | Not automatic                           | Built in                                 |
+| Shared methods    | Not by default                          | Yes (`prototype`)                        |
+| Private variables | Excellent (closures)                    | Possible, but not with prototype methods |
+| Memory efficient  | Less efficient if methods are recreated | More efficient with prototype methods    |
+
+ */
