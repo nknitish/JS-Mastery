@@ -16,23 +16,23 @@ async function fetchJson(url) {
       throw new Error(`HTTP ${response.status}`);
     }
     const data = await response.json();
-    console.log('data', data);
+    console.log("data", data);
     return data;
   } catch (error) {
-    if (error.name === 'AbortError') {
-      console.log('Request aborted');
+    if (error.name === "AbortError") {
+      console.log("Request aborted");
       return;
     }
-    console.log('Fetch error', error.message);
+    console.log("Fetch error", error.message);
     throw error;
   }
 }
 
-fetchJson('https://jsonplaceholder.typicode.com/todos/1');
+fetchJson("https://jsonplaceholder.typicode.com/todos/1");
 
 setTimeout(() => {
   controller.abort();
-}, 1000);
+}, 100);
 
 /*
 Explanation:

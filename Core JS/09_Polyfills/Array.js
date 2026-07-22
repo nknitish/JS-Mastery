@@ -41,6 +41,9 @@ Array.prototype.myMap = function (callback, thisArg) {
 // Filter
 
 Array.prototype.filter = function (cb) {
+  if (typeof callback !== "function") {
+    throw new TypeError("callback is not a function");
+  }
   let result = [];
   for (let i = 0; i < this.length; i++) {
     if (i in this) {
@@ -59,6 +62,9 @@ Array.prototype.filter = function (cb) {
 //Reduce
 
 Array.prototype.reduce = function (cb, initVal) {
+  if (typeof callback !== "function") {
+    throw new TypeError("callback is not a function");
+  }
   let result = initVal;
 
   for (let i = 0; i < this.length; i++) {
@@ -98,7 +104,7 @@ Array.prototype.find = function (cb) {
   return undefined;
 };
 
-// console.log(arr.find((e) => e == 17));
+// console.log(arr.find((e) => e == 10));
 
 //------------------------------------------------------------------------
 
@@ -146,24 +152,32 @@ Array.prototype.includes = function (arg, fromIndex = 0) {
   return false;
 };
 
-// console.log("Hello world".includes("Hello "));
+// console.log("Hello world".includes("world"));
 // console.log([1, 2, 3, 4, 5].includes(4));
 
 //------------------------------------------------------------------------
+
 //MyFlat
-const myFlat = function (arr) {
+
+Array.prototype.MyFlat = function (depth = 1) {
+  if (this == null) {
+    throw new TypeError("Cannot convert undefined or null");
+  }
+
   let result = [];
-  for (let i = 0; i < arr.length; i++) {
-    if (Array.isArray(arr[i])) {
-      result = result.concat(myFlat(arr[i]));
+
+  for (let i = 0; i < this.length; i++) {
+    if (Array.isArray(this[i]) && depth > 0) {
+      result.push(...this[i].MyFlat(depth - 1));
     } else {
-      result.push(arr[i]);
+      result.push(this[i]);
     }
   }
 
   return result;
 };
-console.log(myFlat([[1, 2], 2, [3, 4], [100], 5, [3, 4, [5, [6, [8, 6, 8]]]]]));
+
+// console.log([1, 2, [1, 2, [1, 24, [1, 2]]], [1], [3], 5].MyFlat(3));
 
 //------------------------------------------------------------------------
 // Flat

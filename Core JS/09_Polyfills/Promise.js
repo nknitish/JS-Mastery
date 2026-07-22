@@ -12,6 +12,12 @@ function rejectedPromise() {
   });
 }
 
+function rejectAfter(time) {
+  return new Promise((_, reject) => {
+    setTimeout(() => reject("Failed"), time);
+  });
+}
+
 //------------------------------------------------------------------------
 
 //Promise.All
@@ -23,32 +29,30 @@ function rejectedPromise() {
 
 //----------------------
 
-Promise.myAll = function (arr) {
-  if (!Array.isArray(arr)) {
-    return Promise.reject(new TypeError("Argument must be an array"));
-  }
+Promise.myAll = function (arr = []) {
+  if (!Array.isArray(arr)) throw new TypeError("Aguments must be an array");
 
   return new Promise((resolve, reject) => {
-    const result = [];
+    let result = [];
     let remaining = arr.length;
 
-    if (remaining === 0) {
-      return resolve([]);
+    if (arr.length === 0) {
+      resolve([]);
+      return;
     }
 
     for (let i = 0; i < arr.length; i++) {
       Promise.resolve(arr[i])
-        .then((value) => {
-          result[i] = value;
+        .then((res) => {
+          result[i] = res;
+
           remaining--;
 
           if (remaining === 0) {
             resolve(result);
           }
         })
-        .catch((err) => {
-          reject(err);
-        });
+        .catch(reject);
     }
   });
 };
@@ -107,26 +111,15 @@ Promise.myAllSettled = function (arr) {
 
 //------------------------------------------------------------------------
 // Promise.race()
+// Returns the first resolved or rejected promices
 
-Promise.myRace = function (arr) {
-  if (!Array.isArray(arr)) {
-    return Promise.reject(new TypeError("Arguments must be an array"));
-  }
+Promise.myRace = function (arr = []) {
+  // Error Check
+  if (!Array.isArray(arr)) throw new TypeError("Arguments must be an Array");
 
   return new Promise((resolve, reject) => {
-    if (arr.length === 0) {
-      // Spec: returned promise stays pending forever
-      return;
-    }
-
-    for (let i = 0; i < arr.length; i++) {
-      Promise.resolve(arr[i])
-        .then((value) => {
-          resolve(value); // first resolve wins
-        })
-        .catch((err) => {
-          reject(err); // first reject wins
-        });
+    for (let item of arr) {
+      Promise.resolve(item).then(resolve).catch(reject);
     }
   });
 };
@@ -138,38 +131,37 @@ Promise.myRace = function (arr) {
 //------------------------------------------------------------------------
 // Promise.any();
 
-Promise.myAny = function (arr) {
+/**
+ * Promise.any() resolves with the first fulfilled promise and ignores rejected promises. If all input promises reject, it rejects with an AggregateError containing all rejection reasons. It's useful when you only need one successful result, such as querying multiple servers or fallback APIs."
+ */
+
+Promise.myAny = function (arr = []) {
   if (!Array.isArray(arr)) {
-    return Promise.reject(new TypeError("Arguments must be an array"));
+    throw new TypeError("Arguments must be an Array");
   }
 
   return new Promise((resolve, reject) => {
-    let remaining = arr.length;
-    let errors = [];
-    let settled = false;
-
-    if (remaining === 0) {
-      return reject(new AggregateError([], "All promises were rejected"));
+    if (arr.length === 0) {
+      reject(new AggregateError([], "All promises were rejected"));
+      return;
     }
 
-    for (let i = 0; i < arr.length; i++) {
-      Promise.resolve(arr[i])
-        .then((value) => {
-          if (!settled) {
-            settled = true;
-            resolve(value);
-          }
-        })
+    const errors = new Array(arr.length);
+    let remaining = arr.length;
+
+    arr.forEach((item, index) => {
+      Promise.resolve(item)
+        .then(resolve)
         .catch((err) => {
-          errors[i] = err;
+          errors[index] = err;
+
           remaining--;
 
-          if (!settled && remaining === 0) {
-            settled = true;
+          if (remaining === 0) {
             reject(new AggregateError(errors, "All promises were rejected"));
           }
         });
-    }
+    });
   });
 };
 //------------------------------------------------------------------------

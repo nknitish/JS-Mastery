@@ -1,33 +1,43 @@
 // Custom implementations of core JS utilities for interviews.
 
 Function.prototype.myCall = function (context = globalThis, ...args) {
-  if (typeof this !== 'function') {
-    throw new TypeError('myCall must be called on a function');
+  if (typeof this !== "function") {
+    throw new TypeError("myCall must be called on a function");
   }
-  const fnSymbol = Symbol('fn');
-  context[fnSymbol] = this;
-  const result = context[fnSymbol](...args);
-  delete context[fnSymbol];
-  return result;
+
+  const fn = Symbol();
+  context[fn] = this;
+
+  try {
+    return context[fn](...args);
+  } finally {
+    delete context[fn];
+  }
 };
 
-Function.prototype.myApply = function (context = globalThis, args = []) {
-  if (typeof this !== 'function') {
-    throw new TypeError('myApply must be called on a function');
+// ProtoType
+Function.prototype.myApply = function (context, args = []) {
+  if (typeof this !== "function") {
+    throw new TypeError("myApply must be called on a function");
   }
-  if (!Array.isArray(args) && args !== null) {
-    throw new TypeError('CreateListFromArrayLike called on non-object');
+
+  if (!Array.isArray(args)) {
+    throw new TypeError("CreateListFromArrayLike called on non-object");
   }
-  const fnSymbol = Symbol('fn');
-  context[fnSymbol] = this;
-  const result = args ? context[fnSymbol](...args) : context[fnSymbol]();
-  delete context[fnSymbol];
-  return result;
+
+  const fn = Symbol();
+  context[fn] = this;
+
+  try {
+    return context[fn](...args);
+  } finally {
+    delete context[fn];
+  }
 };
 
 Function.prototype.myBind = function (context = globalThis, ...bindArgs) {
-  if (typeof this !== 'function') {
-    throw new TypeError('myBind must be called on a function');
+  if (typeof this !== "function") {
+    throw new TypeError("myBind must be called on a function");
   }
   const self = this;
   function boundFunction(...callArgs) {
@@ -39,19 +49,20 @@ Function.prototype.myBind = function (context = globalThis, ...bindArgs) {
 };
 
 function myNew(Constructor, ...args) {
-  if (typeof Constructor !== 'function') {
-    throw new TypeError('myNew expects a constructor');
+  if (typeof Constructor !== "function") {
+    throw new TypeError("myNew expects a constructor");
   }
   const instance = Object.create(Constructor.prototype);
   const result = Constructor.apply(instance, args);
-  return result !== null && (typeof result === 'object' || typeof result === 'function')
+  return result !== null &&
+    (typeof result === "object" || typeof result === "function")
     ? result
     : instance;
 }
 
 function myInstanceOf(object, constructor) {
-  if (typeof constructor !== 'function') {
-    throw new TypeError('Right-hand side of instanceof is not callable');
+  if (typeof constructor !== "function") {
+    throw new TypeError("Right-hand side of instanceof is not callable");
   }
   let proto = Object.getPrototypeOf(object);
   const prototype = constructor.prototype;
@@ -71,16 +82,16 @@ Person.prototype.greet = function () {
   return `Hello ${this.name}`;
 };
 
-const alice = myNew(Person, 'Alice');
-console.log('myNew greeting', alice.greet());
-console.log('myInstanceOf', myInstanceOf(alice, Person));
+const alice = myNew(Person, "Alice");
+console.log("myNew greeting", alice.greet());
+console.log("myInstanceOf", myInstanceOf(alice, Person));
 
 const obj = { value: 42 };
 function showValue(arg) {
   return this.value + arg;
 }
 
-console.log('myCall result', showValue.myCall(obj, 8));
-console.log('myApply result', showValue.myApply(obj, [8]));
+console.log("myCall result", showValue.myCall(obj, 8));
+console.log("myApply result", showValue.myApply(obj, [8]));
 const bound = showValue.myBind(obj, 8);
-console.log('myBind result', bound());
+console.log("myBind result", bound());

@@ -35,7 +35,7 @@ class EventEmitter {
   off(eventName, listenerToRemove) {
     if (this.events[eventName]) {
       this.events[eventName] = this.events[eventName].filter(
-        (listener) => listener !== listenerToRemove
+        (listener) => listener !== listenerToRemove,
       );
     }
     return this; // Allows chaining

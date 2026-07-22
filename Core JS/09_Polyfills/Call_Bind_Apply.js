@@ -4,21 +4,27 @@ let obj = {
   name: "Nk",
 };
 
-function printName(age) {
-  console.log("My name is : ", this.name, "My Age is :", age);
+function printName(...args) {
+  console.log(`Hi, My Name is ${this.name} args= ${args}`);
 }
 
 //------------------------------------------------------------
 
 // Call Polyfill
 
-Function.prototype.myCall = function (context = {}, ...arg) {
+Function.prototype.myCall = function (context = globalThis, ...args) {
   if (typeof this !== "function") {
-    throw new Error(this, " is not callable");
+    throw new TypeError("myCall must be called on a function");
   }
 
-  context.fn = this;
-  context.fn(...arg);
+  const fn = Symbol();
+  context[fn] = this;
+
+  try {
+    return context[fn](...args);
+  } finally {
+    delete context[fn];
+  }
 };
 
 printName.myCall(obj, 25);
@@ -27,42 +33,45 @@ printName.myCall(obj, 25);
 
 // Apply
 
-Function.prototype.myApply = function (context = {}, arg = []) {
-  //Error Handling ..
+Function.prototype.myApply = function (context, args = []) {
   if (typeof this !== "function") {
-    throw new Error(this, +" is not callable");
+    throw new TypeError("myApply must be called on a function");
   }
 
-  if (!Array.isArray(arg)) {
-    throw new Error("Arguments must be an array");
+  if (!Array.isArray(args)) {
+    throw new TypeError("CreateListFromArrayLike called on non-object");
   }
 
-  context.fn = this;
-  context.fn(...arg);
+  const fn = Symbol();
+  context[fn] = this;
+
+  try {
+    return context[fn](...args);
+  } finally {
+    delete context[fn];
+  }
 };
 
-printName.apply(obj, [23, 29]);
+printName.myApply(obj, [23, 29]);
 
 //------------------------------------------------------------
 
 //Bind
 
-Function.prototype.myBind = function (context = {}, ...bindArgs) {
+Function.prototype.myBind = function (context, ...args) {
   if (typeof this !== "function") {
     throw new TypeError("myBind must be called on a function");
   }
-  const originalFn = this;
 
-  function boundFn(...newArgs) {
-    return originalFn.apply(context, [...bindArgs, ...newArgs]);
-  }
+  const self = this;
 
-  return boundFn;
+  return function (...extraArgs) {
+    return self.apply(context, [...args, ...extraArgs]);
+  };
 };
 
-let fn = printName.myBind(obj);
+let fn = printName.myBind(obj, 1, 2);
 
-console.log(fn);
 fn(27);
 
 //------------------------------------------------------------
