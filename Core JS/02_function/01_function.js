@@ -118,6 +118,7 @@ sayHi(); // Hi
 console.log(`Called ${sayHi.counter} times`); // Called 2 times
 
 //-------------------------------------------
+// Infinite Currying
 
 function sum(a) {
   let currentSum = a;
@@ -137,8 +138,6 @@ console.log(sum(5)(6)(8)(-4).result);
 
 //-------------------------------------------
 
-// Currying
-
 function sum2(a) {
   let currentSum = a;
   function f(b) {
@@ -156,3 +155,20 @@ console.log(+sum2(5)(6)(8)(-4)); //15
 
 // console.log(sum.toString()); //Return fn
 //-------------------------------------------
+
+const sum = (a) => {
+  let result = a;
+
+  function fn(b) {
+    if (b === undefined) {
+      return result;
+    }
+
+    result += b;
+    return fn;
+  }
+
+  return fn;
+};
+
+// console.log(sum(4)(5)(3)(2)());

@@ -17,31 +17,33 @@ const promiseFunctions = [
   () => Promise.resolve("Third"),
 ];
 
-logTwice(promiseFunctions);
+// logTwice(promiseFunctions);
+
 //---------------------------------------------------------------------------------
 
 //Implemet a retry Promise
 
-const createPromise = () =>
-  new Promise((res, rej) => {
+const fetchData = () => {
+  return new Promise((resolve, reject) => {
     const random = Math.random();
-    random > 0.8 ? res(random) : rej("Error");
+    random > 0.7 ? resolve(random) : reject("Error");
   });
-
-const retry = async (fn, retries = 3) => {
-  let lastError;
-  for (let i = 0; i < retries; i++) {
-    try {
-      return await fn();
-    } catch (err) {
-      lastError = err;
-      console.log(`Retry ${i} Failed`);
-    }
-  }
-
-  throw lastError;
 };
 
-// retry(createPromise, 5).then(console.log).catch(console.error);
+const retry = async (fn, retries) => {
+  while (true) {
+    try {
+      return await fn();
+    } catch (error) {
+      if (retries === 0) {
+        throw error;
+      }
+
+      retries--;
+    }
+  }
+};
+
+retry(fetchData, 3).then(console.log).catch(console.log);
 
 //---------------------------------------------------------------------------------

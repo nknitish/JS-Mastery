@@ -1,21 +1,24 @@
-function memoize(fn) {
-  const cache = {};
+const add = (a, b) => {
+  console.log("Calculating...");
+  return a + b;
+};
 
-  return function (...args) {
-    const key = JSON.stringify(args);
+const memoize = (fn) => {
+  let cache = {};
+  return (...args) => {
+    let key = JSON.stringify(args);
 
-    if (cache[key]) {
-      return cache[key];
+    if (!cache[key]) {
+      cache[key] = fn(...args);
     }
-    // If not cached, execute the original function
-    const result = fn.apply(this, args);
 
-    // Store the result in the cache before returning
-    cache[key] = result;
-    return result;
+    return cache[key];
   };
-}
+};
 
-const sum = (a, b) => a + b;
-const memoizedSum = memoize(sum);
-console.log(memoizedSum(3, 4));
+const memoizedAdd = memoize(add);
+
+console.log(memoizedAdd(2, 3)); // Calculating... 5
+console.log(memoizedAdd(2, 3)); // 5 (cached)
+console.log(memoizedAdd(3, 4)); // Calculating... 7
+console.log(memoizedAdd(2, 3)); // 5 (cached)
