@@ -9,41 +9,28 @@ Demonstrates custom error classes, try/catch, and async error handling.
 class ValidationError extends Error {
   constructor(message) {
     super(message);
-    this.name = 'ValidationError';
+    this.name = "ValidationError";
   }
 }
 
 function validateEmail(email) {
-  if (!email.includes('@')) {
-    throw new ValidationError('Invalid email format');
+  if (!email.includes("@")) {
+    throw new ValidationError("Invalid email format");
   }
   return true;
 }
 
 try {
-  validateEmail('invalid-email');
+  validateEmail("invalid-email");
 } catch (err) {
   if (err instanceof ValidationError) {
-    console.log('validation failed:', err.message);
+    console.log("validation failed:", err.message);
   } else {
     throw err;
   }
 } finally {
-  console.log('validation attempt complete');
+  console.log("validation attempt complete");
 }
-
-async function fetchData() {
-  try {
-    const response = await fetch('https://jsonplaceholder.typicode.com/invalid-url');
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-  } catch (err) {
-    console.log('async error handled:', err.message);
-  }
-}
-
-fetchData();
 
 /*
 Explanation:

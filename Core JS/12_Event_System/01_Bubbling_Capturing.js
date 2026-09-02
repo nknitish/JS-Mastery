@@ -8,27 +8,32 @@ This file explains propagation phases and propagation control.
 =========================================
 */
 
-const container = document.createElement('div');
-container.style.border = '2px solid black';
-container.style.padding = '8px';
-container.textContent = 'container';
+const container = document.createElement("div");
+container.style.border = "2px solid black";
+container.style.padding = "8px";
+container.textContent = "container";
 
 document.body.appendChild(container);
 
-const button = document.createElement('button');
-button.textContent = 'click me';
+const button = document.createElement("button");
+button.textContent = "click me";
 container.appendChild(button);
 
-container.addEventListener('click', () => {
-  console.log('container bubble');
+container.addEventListener("click", () => {
+  console.log("container bubble");
 });
 
-container.addEventListener('click', () => {
-  console.log('container capture');
-}, true);
+// Event Capturing -> Parents to Child
+container.addEventListener(
+  "click",
+  () => {
+    console.log("container capture");
+  },
+  true,
+);
 
-button.addEventListener('click', (event) => {
-  console.log('button handler');
+button.addEventListener("click", (event) => {
+  console.log("button handler");
   event.stopPropagation();
 });
 

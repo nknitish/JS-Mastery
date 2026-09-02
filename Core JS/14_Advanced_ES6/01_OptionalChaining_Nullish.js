@@ -10,9 +10,9 @@ This file demonstrates optional chaining, nullish coalescing, and their behavior
 
 const user = {
   profile: {
-    name: 'Asha',
+    name: "Asha",
     settings: {
-      theme: 'dark',
+      theme: "dark",
     },
   },
 };
@@ -21,7 +21,7 @@ console.log(user.profile?.settings?.theme); // dark
 console.log(user.profile?.preferences?.language); // undefined
 
 const value = null;
-const fallback = value ?? 'default';
+const fallback = value ?? "default";
 console.log(fallback); // default
 
 const zero = 0;

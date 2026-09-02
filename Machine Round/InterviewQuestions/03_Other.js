@@ -68,3 +68,67 @@ function getValue() {
 // console.log(newObj);
 
 //---------------------------------------------------------------------------------
+
+const findSecondLargest = (arr = []) => {
+  let largest = -Infinity;
+  let secondLargest = -Infinity;
+  for (let value of arr) {
+    if (value > largest) {
+      secondLargest = largest;
+      largest = value;
+    } else if (value > secondLargest && value !== largest) {
+      secondLargest = value;
+    }
+  }
+
+  return secondLargest;
+};
+
+// console.log(findSecondLargest([1, 2, 5, 6, 7, 9, 2, 10]));
+
+//---------------------------------------------------------------------------------
+
+const findThirdLargest = (arr = []) => {
+  let largest = -Infinity;
+  let secondLargest = -Infinity;
+  let thirdLargest = -Infinity;
+
+  for (let value of arr) {
+    if (value > largest) {
+      thirdLargest = secondLargest;
+      secondLargest = largest;
+      largest = value;
+    } else if (value > secondLargest && value !== largest) {
+      thirdLargest = secondLargest;
+      secondLargest = value;
+    } else if (value > thirdLargest && value !== secondLargest) {
+      thirdLargest = value;
+    }
+  }
+
+  return thirdLargest;
+};
+
+// console.log(findThirdLargest([4, 1, 2, 3]));
+
+//---------------------------------------------------------------------------------
+
+const printCharCount = (arr = []) => {
+  if (!arr.length) return;
+
+  let count = 1;
+  let result = [];
+
+  for (let i = 1; i < arr.length; i++) {
+    if (arr[i] === arr[i - 1]) {
+      count++;
+    } else {
+      result.push(arr[i - 1] + count);
+      count = 1;
+    }
+  }
+
+  return result.join("");
+};
+console.log(printCharCount(["a", "a", "a", "b", "c", "c", "d"])); //a3b1c2
+//---------------------------------------------------------------------------------

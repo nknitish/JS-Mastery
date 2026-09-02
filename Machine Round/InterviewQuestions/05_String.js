@@ -25,10 +25,29 @@ const isPalindrome = (str) => {
 };
 
 // Test cases
-console.log(isPalindrome("NitiN")); // true
-console.log(isPalindrome("NitiN1")); // false
-console.log(isPalindrome("racecar")); // true
-console.log(isPalindrome("hello")); // false
-console.log(isPalindrome("A man, a plan, a canal: Panama")); // true
-console.log(isPalindrome("No 'x' in Nixon")); // true
-console.log(isPalindrome("")); // true
+// console.log(isPalindrome("NitiN")); // true
+// console.log(isPalindrome("NitiN1")); // false
+// console.log(isPalindrome("racecar")); // true
+// console.log(isPalindrome("hello")); // false
+// console.log(isPalindrome("A man, a plan, a canal: Panama")); // true
+// console.log(isPalindrome("No 'x' in Nixon")); // true
+// console.log(isPalindrome("")); // true
+
+////----------------------------------
+
+const reverseStr = (str) => {
+  let result = "";
+  let temp = "";
+  for (char of str) {
+    if (char === " ") {
+      result = result + temp + " ";
+      temp = "";
+    } else {
+      temp = char + temp;
+    }
+  }
+  return result + temp;
+};
+
+const str = "Hello World Nk Nitish";
+console.log(reverseStr(str)); // //olleH dlroW

@@ -3,7 +3,7 @@
 // 1. Simple memoize helper for pure functions
 function memoize(fn) {
   const cache = new Map();
-  return function(...args) {
+  return function (...args) {
     const key = JSON.stringify(args);
     if (cache.has(key)) {
       return cache.get(key);
@@ -20,7 +20,7 @@ function curry(fn) {
     if (args.length >= fn.length) {
       return fn.apply(this, args);
     }
-    return function(...nextArgs) {
+    return function (...nextArgs) {
       return curried.apply(this, [...args, ...nextArgs]);
     };
   };
@@ -41,7 +41,7 @@ class EventBus {
 
   publish(event, payload) {
     const handlers = this.handlers.get(event) || [];
-    handlers.forEach(cb => cb(payload));
+    handlers.forEach((cb) => cb(payload));
   }
 }
 
@@ -53,15 +53,19 @@ function rangeIterator(start, end, step = 1) {
     step,
     next() {
       if (this.current <= this.end) {
-        return { value: this.current, done: false, next: (this.current += this.step) - this.step };
+        return {
+          value: this.current,
+          done: false,
+          next: (this.current += this.step) - this.step,
+        };
       }
       return { value: undefined, done: true };
-    }
+    },
   };
 }
 
 // Example usage
-const fib = memoize(n => {
+const fib = memoize((n) => {
   if (n < 2) return n;
   return fib(n - 1) + fib(n - 2);
 });
@@ -71,9 +75,9 @@ const curriedAdd = curry(add);
 const eventBus = new EventBus();
 const iterator = rangeIterator(1, 5);
 
-eventBus.subscribe('data', value => console.log('data event', value));
-eventBus.publish('data', { id: 1 });
+eventBus.subscribe("data", (value) => console.log("data event", value));
+eventBus.publish("data", { id: 1 });
 
-console.log('memoized fib(10)=', fib(10));
-console.log('curried add=', curriedAdd(1)(2)(3));
-console.log('iterator next=', iterator.next());
+console.log("memoized fib(10)=", fib(10));
+console.log("curried add=", curriedAdd(1)(2)(3));
+console.log("iterator next=", iterator.next());

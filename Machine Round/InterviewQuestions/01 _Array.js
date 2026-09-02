@@ -36,6 +36,8 @@ const isValidShuffle = () => {};
 
 const removeWhiteSpace = (str = "") => {
   if (!str) return "";
+
+  return str.replace(/\s+/g, "");
   return [...str].filter((char) => char != " ").join("");
 };
 
@@ -62,6 +64,18 @@ const findAllSubstrings = (str = "") => {
 
   return result;
 };
+
+// const findAllSubstrings = (str = "") => {
+//   if (!str) return [];
+
+//   let result = [];
+//   for (let i = 0; i < str.length; i++) {
+//     for (let j = i + 1; j <= str.length; j++) {
+//       result.push(str.substring(i, j));
+//     }
+//   }
+//   return result;
+// };
 
 // console.log(findAllSubstrings("abc")); //["a", "ab", "abc", "b", "bc", "c"];
 // console.log(findAllSubstrings("ab")); // ["a", "ab", "b"]
@@ -135,33 +149,29 @@ const myAtoi = (str = "") => {
 //---------------------------------------------------------------------------------
 // Find the Longest Substring Without Repeating Characters
 
-//Todo
 const longestUniqueSubstring = (str = "") => {
-  if (!str.length) return 0;
+  if (!str) return str;
 
-  let left = 0;
+  let start = 0;
+  let seen = new Set();
   let maxLen = 0;
-  let set = new Set();
+  let maxStart = 0;
 
-  for (let right = 0; right < str.length; right++) {
-    const char = str[right];
-
-    // Shrink window until duplicate is removed
-    while (set.has(char)) {
-      set.delete(str[left]);
-      left++;
+  for (let end = 0; end < str.length; end++) {
+    while (seen.has(str[end])) {
+      seen.delete(str[start]);
+      start++;
     }
 
-    // Add current char
-    set.add(char);
+    seen.add(str[end]);
 
-    // Update max length
-    maxLen = Math.max(maxLen, right - left + 1);
-
-    console.log(set, char, maxLen);
+    if (end - start + 1 > maxLen) {
+      maxLen = Math.max(maxLen, end - start + 1);
+      maxStart = start;
+    }
   }
 
-  return set;
+  return str.substring(maxStart, maxStart + maxLen);
 };
 
 // console.log(longestUniqueSubstring("abcabcbb")); // 3 ("abc")
@@ -173,32 +183,21 @@ const longestUniqueSubstring = (str = "") => {
 
 // Check if Two Strings are Anagrams
 
-const areAnagrams = (str1 = "", str2 = "") => {
-  if (!str1 || !str2) return false;
+const areAnagrams = (a = "", b = "") => {
+  if (a.length !== b.length) return false;
 
-  // Mini Approch
+  const freq = {};
 
-  // return [...str1].sort().join() === [...str2].sort().join();
-
-  let freq = new Map();
-
-  for (let char of str1) {
-    freq.set(char, (freq.get(char) || 0) + 1);
+  for (const ch of a) {
+    freq[ch] = (freq[ch] || 0) + 1;
   }
 
-  for (let char of str2) {
-    if (!freq.get(char)) return false;
-
-    let count = freq.get(char);
-
-    if (count === 1) {
-      freq.delete(char);
-    } else {
-      freq.set(char, --count);
-    }
+  for (const ch of b) {
+    if (!freq[ch]) return false;
+    freq[ch]--;
   }
 
-  return freq.size === 0;
+  return true;
 };
 
 // console.log(areAnagrams("listen", "silent")); // true
@@ -206,6 +205,24 @@ const areAnagrams = (str1 = "", str2 = "") => {
 // console.log(areAnagrams("evil", "vile")); // true
 // console.log(areAnagrams("aabb", "bbaa")); // true
 // console.log(areAnagrams("test", "ttew")); // false
+
+//---------------------------------------------------------------------------------
+
+// Filter anagrams
+
+function aclean(arr) {
+  let map = new Map();
+  for (let word of arr) {
+    let sorted = word.toLowerCase().split("").sort().join("");
+    map.set(sorted, word);
+  }
+
+  return Array.from(map.values());
+}
+
+// console.log(
+//   aclean(["nap", "teachers", "cheaters", "PAN", "ear", "era", "hectares"]),
+// );
 
 //---------------------------------------------------------------------------------
 
@@ -342,6 +359,27 @@ let arr2 = [
 ];
 
 // console.log(join(arr1, arr2));
+
+//---------------------------------------------------------------------------------
+const groupByCategory = (arr = []) => {
+  return arr.reduce((result, item) => {
+    if (!result[item.category]) {
+      result[item.category] = [];
+    }
+
+    result[item.category].push(item);
+
+    return result;
+  }, {});
+};
+
+// console.log(
+//   groupByCategory([
+//     { id: 1, category: "Mobile", name: "iPhone" },
+//     { id: 2, category: "Laptop", name: "MacBook" },
+//     { id: 3, category: "Mobile", name: "Pixel" },
+//   ]),
+// );
 
 //---------------------------------------------------------------------------------
 
@@ -1143,4 +1181,30 @@ const processProducts = (items = []) => {
 };
 // console.log(processProducts(products));
 
+//---------------------------------------------------------------------------------
+
+//  Filter anagrams
+
+const filterAnagrams = (arr = []) => {
+  let map = new Map();
+
+  for (let item of arr) {
+    let sorted = item.toLowerCase().split("").sort().join("");
+    map.set(sorted, item);
+  }
+
+  return Array.from(map.values());
+};
+
+// console.log(
+//   filterAnagrams([
+//     "nap",
+//     "teachers",
+//     "cheaters",
+//     "PAN",
+//     "ear",
+//     "era",
+//     "hectares",
+//   ]),
+// );
 //---------------------------------------------------------------------------------
