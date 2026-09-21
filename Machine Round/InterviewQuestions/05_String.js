@@ -33,9 +33,9 @@ const isPalindrome = (str) => {
 // console.log(isPalindrome("No 'x' in Nixon")); // true
 // console.log(isPalindrome("")); // true
 
-////----------------------------------
+////------------------------------------------------------
 
-const reverseStr = (str) => {
+const reverseWords = (str) => {
   let result = "";
   let temp = "";
   for (char of str) {
@@ -49,5 +49,25 @@ const reverseStr = (str) => {
   return result + temp;
 };
 
-const str = "Hello World Nk Nitish";
-console.log(reverseStr(str)); // //olleH dlroW
+const str = "Hello World";
+// console.log(reverseWords(str)); // //olleH dlroW
+
+//------------------------------------------------------
+
+const removeDuplicatesFromString = (str) => {
+  let mySet = new Set();
+
+  let result = "";
+  for (let char of str) {
+    if (!mySet.has(char)) {
+      result += char;
+      mySet.add(char);
+    }
+  }
+
+  return result;
+};
+
+// console.log(removeDuplicatesFromString("NiTTiN"));
+
+//------------------------------------------------------

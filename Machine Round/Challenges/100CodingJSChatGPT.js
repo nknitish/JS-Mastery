@@ -24,6 +24,18 @@ const reverseString = (str = "") => {
 
 //----------------------------------------------------------
 
+//  Check if a String is a Rotation of Another String
+function isRotation(s1, s2) {
+  if (s1.length !== s2.length) return false;
+
+  return (s1 + s1).includes(s2);
+}
+
+// console.log(isRotation("ABCD", "CDAB")); // true
+// console.log(isRotation("ABCD", "ACBD")); // false
+
+//----------------------------------------------------------
+
 // Write a function firstRecurringCharacter(arr)
 // Return the first recurring element in the array.
 // If no recurring element, return undefined.
@@ -205,19 +217,21 @@ function twoSum(nums, target) {
 // Time: O(n), Space: O(1)
 
 const majorityElement = (nums = []) => {
-  let count = 0;
-  let candidate = null;
+  let obj = {};
+  let result;
+  let maxCount = -1;
 
   for (let num of nums) {
-    if (count === 0) candidate = num;
+    obj[num] = (obj[num] || 0) + 1;
 
-    count += num === candidate ? 1 : -1;
-    console.log(candidate, count);
+    if (obj[num] > maxCount) {
+      maxCount = obj[num];
+      result = num;
+    }
   }
 
-  return candidate;
+  return result;
 };
-
 // console.log(majorityElement([3, 2, 3])); // Expected: 3
 // console.log(majorityElement([2, 2, 1, 1, 1, 2, 2])); // Expected: 2
 // console.log(majorityElement([1])); // Expected: 1
@@ -360,6 +374,23 @@ const productExceptSelf = (nums = []) => {
 // console.log(productExceptSelf([5])); // Expected: [1]
 
 //-------------------------------------------------------------------------------------
+
+const removeDuplicatesFromString = (str) => {
+  let mySet = new Set();
+
+  let result = "";
+  for (let char of str) {
+    if (!mySet.has(char)) {
+      result += char;
+      mySet.add(char);
+    }
+  }
+
+  return result;
+};
+
+// console.log(removeDuplicatesFromString("NiTTiN"));
+
 //-------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------

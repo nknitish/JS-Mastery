@@ -22,7 +22,7 @@ const toTitleCase = (str = "") => {
 
 // Check if a String is a Valid Shuffle of Two Strings
 //Todo
-const isValidShuffle = () => {};
+const isValidShuffle = (str1, str2, result) => {};
 
 // console.log(isValidShuffle("abc", "def", "adbcef")); // true
 // console.log(isValidShuffle("abc", "def", "abdecf")); // true
@@ -310,27 +310,6 @@ const checkPalindrome = (str = "") => {
 };
 
 // console.log(checkPalindrome("NITI"));
-//---------------------------------------------------------------------------------
-
-//Reverse a string
-
-const reverseString = (str = "") => {
-  if (!str.length) return undefined;
-
-  const arr = str.split("");
-  let start = 0;
-  let end = str.length - 1;
-
-  while (start < end) {
-    [arr[start], arr[end]] = [arr[end], arr[start]];
-    start++;
-    end--;
-  }
-
-  return arr.join("");
-};
-
-// console.log(reverseString("Hello World"));
 
 //---------------------------------------------------------------------------------
 // 2722. Join Two Arrays by ID
@@ -339,14 +318,15 @@ var join = function (arr1, arr2) {
   let result = {};
 
   for (let i = 0; i < arr1.length; i++) {
-    result[arr1[i].id] = { ...arr1[i] };
+    const id = arr1[i].id;
+    result[id] = { ...arr1[i] };
   }
   for (let i = 0; i < arr2.length; i++) {
     const id = arr2[i].id;
     result[id] = { ...result[id], ...arr2[i] };
   }
 
-  return Object.values(result);
+  return result;
 };
 
 let arr1 = [
@@ -385,11 +365,11 @@ const groupByCategory = (arr = []) => {
 
 const getDataByKey = (arr = [], key = "dept") => {
   return arr.reduce((acc, el) => {
-    const val = el[key];
-    if (!acc[val]) {
-      acc[val] = [];
+    const objkey = el[key];
+    if (!acc[objkey]) {
+      acc[objkey] = [];
     }
-    acc[val].push(el);
+    acc[objkey].push(el);
 
     return acc;
   }, {});
@@ -410,7 +390,6 @@ let arr = [
 
 const customCompare = (a, b) => {
   if (typeof a !== typeof b) {
-    console.log("---->", a, b);
     throw new TypeError("Type of values should be same");
   }
 
@@ -490,7 +469,7 @@ const findDuplicates = (arr = [], key) => {
   return duplicates;
 };
 
-// console.log(findDuplicates(data2, "id"));
+console.log(findDuplicates(data2, "id"));
 // console.log(findDuplicates(data, "name"));
 //---------------------------------------------------------------------------------
 
