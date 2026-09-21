@@ -133,3 +133,8 @@ Explanation:
 - loops and conditionals are the building blocks of branching logic.
 - `try/catch/finally` handles runtime exceptions and cleanup.
 */
+
+let temp = performance.now();
+setTimeout(() => {
+  console.log("Time to execute code", performance.now() - temp);
+}, 2000);

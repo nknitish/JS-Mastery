@@ -47,7 +47,7 @@
 
 // const fn2 = test();
 // fn2();
-// console.log(typeof a);
+// console.log(typeof a); // Undefined even if varibale does't exist
 
 //-----------------------------------
 
@@ -61,7 +61,7 @@
 // };
 
 // const ref = obj.method();
-// ref();
+// ref(); //10
 
 //-----------------------------------
 
@@ -108,7 +108,7 @@
 // };
 
 // console.log(arr.filter(inBetween(3, 6)));
-// console.log(arr.filter(inArray([1, 2, 10])));
+// console.log(arr.filter(inArray([1, 2, 3, 4, 10])));
 
 //-----------------------------------
 

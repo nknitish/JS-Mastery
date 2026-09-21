@@ -24,6 +24,8 @@ function Person(name, age) {
 
 const person = new Person("Sam", 40);
 
+console.log(person);
+
 // Class syntax
 class Student {
   constructor(name, grade) {
