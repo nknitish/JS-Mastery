@@ -9,7 +9,7 @@
 // printInOrder();
 
 // function printInOrder() {
-//   for (let i = 1; i <= 4; i++) {
+//   for (var i = 1; i <= 4; i++) {
 //     function closure(x) {
 //       setTimeout(() => console.log(x), x * 1000);
 //     }

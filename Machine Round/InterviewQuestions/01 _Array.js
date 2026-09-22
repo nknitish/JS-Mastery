@@ -276,7 +276,10 @@ const removeDuplicates = (str = "") => {
   if (typeof str !== "string") throw new Error("Invalid Input");
   if (!str.length) return "";
 
-  let seen = new Map();
+  // return Array.from(new Set(str)).join("");
+
+  let result = "";
+  let seen = new Set();
 
   for (let char of str) {
     if (!seen.has(char)) {
@@ -284,7 +287,7 @@ const removeDuplicates = (str = "") => {
       result += char;
     }
   }
-  // return result;
+  return result;
 };
 
 // console.log(removeDuplicates("programming")); // "progamin"
@@ -326,7 +329,7 @@ var join = function (arr1, arr2) {
     result[id] = { ...result[id], ...arr2[i] };
   }
 
-  return result;
+  return Object.values(result);
 };
 
 let arr1 = [
@@ -456,20 +459,19 @@ const findDuplicates = (arr = [], key) => {
   let duplicates = [];
 
   for (let data of arr) {
-    const value = data[key];
+    const objKey = data[key];
 
-    if (seen.hasOwnProperty(value)) {
-      if (seen[value] === 1) duplicates.push(data);
-      seen[value]++;
-    } else {
-      seen[value] = 1;
-    }
+    // Catch and push to result
+    if (seen[objKey] === 1) duplicates.push(data);
+
+    // Add Key
+    seen[objKey] = (seen[objKey] || 0) + 1;
   }
 
   return duplicates;
 };
 
-console.log(findDuplicates(data2, "id"));
+// console.log(findDuplicates(data2, "id"));
 // console.log(findDuplicates(data, "name"));
 //---------------------------------------------------------------------------------
 
@@ -577,7 +579,7 @@ const getFilteredMovies = (name = "", rating) => {
 function shortRecords(arr = []) {
   return arr.sort((a, b) => {
     if (a.status !== b.status) {
-      return b.status - Number(a.status);
+      return Number(b.status) - Number(a.status);
     }
 
     return a.popularityIndex - b.popularityIndex;
