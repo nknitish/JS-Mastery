@@ -8,17 +8,17 @@ This file explains the event loop ordering for timers, promises, and next tick t
 =========================================
 */
 
-console.log('script start');
+console.log("script start");
 
 setTimeout(() => {
-  console.log('timeout');
+  console.log("timeout");
 }, 0);
 
 Promise.resolve().then(() => {
-  console.log('promise');
+  console.log("promise");
 });
 
-console.log('script end');
+console.log("script end");
 
 /*
 Expected output:

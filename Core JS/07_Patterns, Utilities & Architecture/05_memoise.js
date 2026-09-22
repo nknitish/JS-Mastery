@@ -1,14 +1,13 @@
 const add = (a, b) => {
-  console.log("Calculating...");
   return a + b;
 };
 
 const memoize = (fn) => {
-  let cache = {};
+  let cache = new Map();
   return (...args) => {
     let key = JSON.stringify(args);
 
-    if (!cache[key]) {
+    if (!cache.has(key)) {
       cache[key] = fn(...args);
     }
 

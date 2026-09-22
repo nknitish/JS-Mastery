@@ -1,51 +1,300 @@
-# ES6+ & Built-in Data Structures
+# ES6 Fundamentals
 
-## What is it?
+This folder is dedicated to ES6+ features and modern JavaScript syntax.
 
-This folder covers ES6+ syntax and modern built-in collections such as Map, Set, WeakMap, and WeakSet.
+## Why ES6 matters
 
-## Why it matters
+ES6 introduced cleaner syntax, better structure, and safer patterns for writing JavaScript. It makes code shorter, easier to read, and more maintainable.
 
-ES6 features are now standard in production code. They help you write cleaner, safer, and more expressive JavaScript.
+## What is new in ES6?
 
-## Topics covered
+Some of the biggest additions were:
 
+- `let` and `const`
+- arrow functions
 - template literals
 - destructuring
-- spread and rest operators
+- default parameters
+- rest and spread operators
 - enhanced object literals
-- Map, Set, WeakMap, WeakSet
-- Symbols and well-known symbols
+- classes
+- modules (`import` / `export`)
+- Promises
+- `async` / `await`
+- `Map`, `Set`, `WeakMap`, `WeakSet`
+- `Symbol`
 - iterators and generators
 
-## Interview questions and answers
+## Core ES6 features
 
-### What are the benefits of `Map` over plain objects?
+### 1) `let` and `const`
 
-`Map` preserves insertion order, allows keys of any type, and has a `.size` property. It also avoids collisions with object prototype properties.
+`let` allows block-scoped variables and `const` creates constants.
 
-### How does destructuring work with nested objects?
+```js
+let count = 1;
+count = 2;
 
-Destructuring extracts nested properties directly into variables, making code more readable and avoiding repeated property access.
+const user = { name: "Asha" };
+// user = {} // error
+```
 
-Example answer:
-"You can write `const { address: { city } } = user;` to extract `city` from a nested `address` object."
+### 2) Arrow functions
 
-### Why use `WeakMap` or `WeakSet`?
+Arrow functions provide shorter syntax and keep lexical `this` binding.
 
-`WeakMap` and `WeakSet` hold weak references to objects, allowing them to be garbage collected if there are no other references. They are ideal for caches and metadata storage where keys should not prevent collection.
+```js
+const add = (a, b) => a + b;
+console.log(add(2, 3));
+```
 
-### What is a Symbol and why use it?
+### 3) Template literals
 
-A Symbol is a unique primitive value used as an object key. It prevents accidental property name collisions and enables well-known symbol behavior, such as custom iteration.
+Template strings allow string interpolation and multi-line text.
 
-### How are iterators used in ES6?
+```js
+const name = "Asha";
+const greeting = `Hello ${name}!`;
+console.log(greeting);
+```
 
-Iterators provide a standard protocol for consuming values. Objects that implement `[Symbol.iterator]()` can be used with `for...of`, the spread operator, and destructuring.
+### 4) Destructuring
 
-## Quick notes
+This extracts values from arrays and objects into variables.
 
-- template literals support interpolation and multiline strings.
-- rest collects arguments, spread expands elements.
-- `Map` preserves insertion order and supports any key type.
-- `WeakMap` keys are weakly referenced and not enumerable.
+```js
+const user = { name: "Neha", age: 24 };
+const { name, age } = user;
+
+const numbers = [10, 20, 30];
+const [first, second] = numbers;
+```
+
+### 5) Default parameters
+
+```js
+function greet(name = "Guest") {
+  return `Hello ${name}`;
+}
+```
+
+### 6) Rest and spread
+
+```js
+function sum(...nums) {
+  return nums.reduce((total, n) => total + n, 0);
+}
+
+const arr1 = [1, 2, 3];
+const arr2 = [...arr1, 4, 5];
+```
+
+### 7) Object shorthand
+
+```js
+const name = "Asha";
+const age = 25;
+const user = { name, age };
+```
+
+### 8) Classes
+
+```js
+class Person {
+  constructor(name) {
+    this.name = name;
+  }
+
+  greet() {
+    return `Hi, I am ${this.name}`;
+  }
+}
+```
+
+### 9) Modules
+
+```js
+// app.js
+import { sum } from "./math.js";
+console.log(sum(2, 3));
+```
+
+### 10) Promises and async/await
+
+```js
+const fetchData = () => Promise.resolve("done");
+
+fetchData().then(console.log);
+```
+
+```js
+async function run() {
+  const value = await fetchData();
+  console.log(value);
+}
+```
+
+## Map
+
+`Map` is a collection of key-value pairs where keys can be any type.
+
+```js
+const studentMap = new Map();
+studentMap.set("name", "Riya");
+studentMap.set(1, "ID");
+studentMap.set({ id: 1 }, "object key");
+
+console.log(studentMap.get("name"));
+console.log(studentMap.size);
+```
+
+### Why use `Map`?
+
+- preserves insertion order
+- allows any data type as key
+- no prototype-key collisions like plain objects
+- useful for caches, lookups, and metadata
+
+### Map vs object
+
+```js
+const obj = { name: "Asha" };
+const map = new Map([["name", "Asha"]]);
+```
+
+Use object for fixed data and Map for dynamic key-value storage.
+
+## Set
+
+`Set` stores unique values only.
+
+```js
+const numbers = new Set([1, 2, 2, 3, 3, 4]);
+console.log(numbers); // Set(4) { 1, 2, 3, 4 }
+```
+
+### Why use `Set`?
+
+- removes duplicates automatically
+- fast membership checks
+- good for unique IDs, tags, or filtering
+
+```js
+const uniqueNames = new Set(["Asha", "Riya", "Asha"]);
+console.log(uniqueNames.size); // 2
+```
+
+## WeakMap
+
+`WeakMap` is like `Map`, but only accepts object keys and does not prevent garbage collection.
+
+```js
+const weakMap = new WeakMap();
+const user = { name: "Asha" };
+
+weakMap.set(user, "active");
+console.log(weakMap.get(user));
+```
+
+### Why use `WeakMap`?
+
+- memory-friendly
+- keys are weakly referenced
+- not enumerable
+- useful for private metadata and caches
+
+## WeakSet
+
+`WeakSet` stores unique objects only and also allows garbage collection.
+
+```js
+const weakSet = new WeakSet();
+const obj = { id: 1 };
+
+weakSet.add(obj);
+console.log(weakSet.has(obj));
+```
+
+### Why use `WeakSet`?
+
+- stores only objects
+- no memory leaks from stale references
+- useful for tracking objects that should not stay alive unnecessarily
+
+## Symbol
+
+`Symbol` creates unique values that are not equal to any other symbol.
+
+```js
+const id = Symbol("id");
+const person = {
+  [id]: 101,
+  name: "Asha",
+};
+
+console.log(person[id]);
+```
+
+### Why use `Symbol`?
+
+- creates hidden, collision-free property keys
+- useful for metadata and library internals
+
+## Iterators and generators
+
+ES6 introduced the iterator protocol and `for...of` loops.
+
+```js
+const arr = [10, 20, 30];
+for (const num of arr) {
+  console.log(num);
+}
+```
+
+```js
+function* generateNumbers() {
+  yield 1;
+  yield 2;
+  yield 3;
+}
+
+const gen = generateNumbers();
+console.log(gen.next().value);
+```
+
+## Quick interview summary
+
+### What is ES6?
+
+ES6 is the modern JavaScript standard introduced in 2015. It added cleaner syntax and better features.
+
+### Why use `Map` instead of object?
+
+Because `Map` supports any key type, keeps insertion order, and avoids object prototype issues.
+
+### Why use `Set`?
+
+Because it automatically removes duplicates and checks membership quickly.
+
+### Why use `WeakMap` and `WeakSet`?
+
+Because they are memory-efficient and do not keep objects alive unnecessarily.
+
+### What is a Symbol?
+
+A Symbol is a unique primitive used for non-conflicting property names and hidden metadata.
+
+## Best practice
+
+Use:
+
+- `let` and `const` for variables
+- arrow functions for short callbacks
+- `Map` for dynamic key-value data
+- `Set` for unique values
+- `WeakMap`/`WeakSet` for weak reference use cases
+- `async`/`await` for asynchronous code
+
+---
+
+This folder is meant to become your ES6 study base.

@@ -3,116 +3,96 @@
 MAP, SET, WEAKMAP, WEAKSET
 =========================================
 
-This file shows how to use modern built-in collections and when they are preferable.
+These are modern ES6 built-in collections.
+They are useful when you need fast lookups, unique values,
+weak object references, or memory-safe caches.
 */
 
-/**
+// 1) Map
+const studentMap = new Map();
+studentMap.set("name", "Asha");
+studentMap.set("age", 25);
+studentMap.set(1, "id");
 
-new Map() – creates the map.
-map.set(key, value) – stores the value by the key.
-map.get(key) – returns the value by the key, undefined if key doesn’t exist in map.
-map.has(key) – returns true if the key exists, false otherwise.
-map.delete(key) – removes the element (the key/value pair) by the key.
-map.clear() – removes everything from the map.
-map.size – returns the current element count. 
-*/
+console.log("map get:", studentMap.get("name"));
+console.log("map size:", studentMap.size);
+console.log("has age?", studentMap.has("age"));
 
-// https://javascript.info/map-set
+// Map can use any key type, not just strings
+const objKey = { id: 1 };
+studentMap.set(objKey, "object-key");
+console.log(studentMap.get(objKey));
 
-const map = new Map();
-map.set("key", "value");
-map.set({}, "object");
-console.log(map.get("key"));
-console.log("map size", map.size);
+// Create Map from object entries
+const userObject = { name: "Riya", age: 22 };
+const userMap = new Map(Object.entries(userObject));
+console.log("map from object:", userMap.get("name"));
 
-// Create Map from Object
-
-let mapFromObject = new Map(
-  Object.entries({
-    name: "John",
-    age: 30,
-  }),
-);
-
-console.log(mapFromObject.get("name")); //John
-
-// Create object form Map
-// https://javascript.info/map-set#object-fromentries-object-from-map
-
-let prices = Object.fromEntries([
-  ["banana", 1],
-  ["orange", 2],
-  ["meat", 4],
+// Create object from Map
+const prices = Object.fromEntries([
+  ["apple", 10],
+  ["banana", 20],
+  ["mango", 30],
 ]);
+console.log("converted object:", prices.apple);
 
-// now prices = { banana: 1, orange: 2, meat: 4 }
+// 2) Set
+const uniqueNumbers = new Set([1, 2, 2, 3, 4, 4, 5]);
+console.log("set values:", uniqueNumbers);
+console.log("set size:", uniqueNumbers.size);
+console.log("has 3?", uniqueNumbers.has(3));
 
-console.log(prices.orange); // 2
+// remove duplicates from array
+const duplicates = [1, 2, 2, 3, 3, 4];
+const uniqueArray = [...new Set(duplicates)];
+console.log("unique array:", uniqueArray);
 
-//-------------------------------------------------------------------------
-
-/**
-A Set is a special type collection – “set of values” (without keys), where each value may occur only once.
-
-Its main methods are:
-
-new Set([iterable]) – creates the set, and if an iterable object is provided (usually an array), copies values from it into the set.
-set.add(value) – adds a value, returns the set itself.
-set.delete(value) – removes the value, returns true if value existed at the moment of the call, otherwise false.
-set.has(value) – returns true if the value exists in the set, otherwise false.
-set.clear() – removes everything from the set.
-set.size – is the elements count.
-
- */
-
-console.log("----------------- SET -----------------------");
-const set = new Set([1, 2, 2, 3]);
-console.log("set has 2", set.has(2));
-console.log("set size", set.size);
-
-// Ex 1 Filter anagrams
-let arr = ["nap", "teachers", "cheaters", "PAN", "ear", "era", "hectares"];
-
-function aclean(arr) {
-  let map = new Map();
-  for (let word of arr) {
-    let sorted = word.toLowerCase().split("").sort().join("");
-    map.set(sorted, word);
-  }
-
-  return Array.from(map.values());
-}
-
-console.log(aclean(arr));
-
-//-------------------------------------------------------------------------
-
-// https://javascript.info/weakmap-weakset
-
-/**
- * The first difference between Map and WeakMap is that keys must be objects, not primitive values:
- *
- */
-
-console.log("----------------- WEAK MAP -----------------------");
-
+// 3) WeakMap
 const weakMap = new WeakMap();
-const obj = {};
-weakMap.set(obj, "data");
-console.log("weakMap has obj", weakMap.has(obj));
+const hero = { name: "Iron Man" };
 
-//-------------------------------------------------------------------------
+weakMap.set(hero, "Avengers");
+console.log("weakMap value:", weakMap.get(hero));
 
-console.log("----------------- WEAK SET -----------------------");
+// WeakMap keys must be objects, not primitives
+// weakMap.set('name', 'Asha'); // TypeError
 
+// 4) WeakSet
 const weakSet = new WeakSet();
-weakSet.add(obj);
-console.log("weakSet has obj", weakSet.has(obj));
+const target = { id: 101 };
+weakSet.add(target);
+console.log("weakSet has target?", weakSet.has(target));
+
+// WeakSet also only stores objects
+// weakSet.add(10); // TypeError
 
 /*
-Explanation:
-- Map can use object keys and preserves insertion order.
-- Set stores unique values.
-- WeakMap keys are weakly held and not enumerable, enabling memory-sensitive caches.
-- WeakSet stores objects and allows garbage collection when there are no other references.
+When to use each:
+
+Map:
+- dynamic key-value data
+- object-like lookups
+- preserve insertion order
+
+Set:
+- unique items only
+- remove duplicates
+- fast membership checks
+
+WeakMap:
+- private metadata
+- temporary cache
+- memory-safe object associations
+
+WeakSet:
+- track object existence without preventing cleanup
+- good for checking if an object was visited
+*/
+
+/*
+Difference summary:
+- Map => key-value pairs, any key type
+- Set => unique values only
+- WeakMap => object keys, weak references, no iteration
+- WeakSet => object values, weak references, no iteration
 */

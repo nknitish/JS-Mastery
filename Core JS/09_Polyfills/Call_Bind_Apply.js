@@ -17,13 +17,13 @@ Function.prototype.myCall = function (context = globalThis, ...args) {
     throw new TypeError("myCall must be called on a function");
   }
 
-  const fn = Symbol();
-  context[fn] = this;
+  const key = Symbol();
+  context[key] = this;
 
   try {
-    return context[fn](...args);
+    return context[key](...args);
   } finally {
-    delete context[fn];
+    delete context[key];
   }
 };
 
@@ -42,13 +42,13 @@ Function.prototype.myApply = function (context, args = []) {
     throw new TypeError("CreateListFromArrayLike called on non-object");
   }
 
-  const fn = Symbol();
-  context[fn] = this;
+  const key = Symbol();
+  context[key] = this;
 
   try {
-    return context[fn](...args);
+    return context[key](...args);
   } finally {
-    delete context[fn];
+    delete context[key];
   }
 };
 

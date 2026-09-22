@@ -1,25 +1,60 @@
-// Example `package.json`-style npm scripts explained in JS comments
-// This file shows common development scripts and what they do.
+// npm scripts are commands defined in package.json.
+// They standardize common tasks like starting the app, building it, testing it,
+// and linting the codebase for a project.
 
-// Install dependencies: `npm install`
-// Start dev server (e.g., using Vite): `npm run dev`
-// Build for production: `npm run build`
-// Run a simple node script:
-if (typeof process !== 'undefined') {
-  const script = process.argv[2];
-  if (script === 'build') console.log('Building project (example)');
-  if (script === 'dev') console.log('Starting dev server (example)');
-}
-
-// Example mapping of scripts (for README reference):
+// Example package.json structure:
 // {
 //   "scripts": {
 //     "dev": "vite",
 //     "build": "vite build",
-//     "start": "node dist/index.js",
-//     "lint": "eslint src --fix",
-//     "test": "vitest"
+//     "preview": "vite preview",
+//     "test": "vitest",
+//     "lint": "eslint .",
+//     "format": "prettier --write ."
 //   }
 // }
 
-console.log('NPM scripts example file — see README for bundler details.');
+// Common commands:
+// npm install         -> installs dependencies
+// npm run dev         -> starts development server
+// npm run build       -> creates production output
+// npm run preview     -> previews built app locally
+// npm test            -> runs tests
+// npm run lint        -> checks lint rules
+
+if (typeof process !== "undefined") {
+  const script = process.argv[2];
+
+  if (script === "dev") {
+    console.log("Starting development server...");
+  }
+
+  if (script === "build") {
+    console.log("Creating production bundle...");
+  }
+
+  if (script === "test") {
+    console.log("Running project tests...");
+  }
+
+  if (script === "lint") {
+    console.log("Checking code quality...");
+  }
+}
+
+// Why npm scripts matter:
+// - everyone runs the same commands
+// - easier onboarding for developers
+// - no need to remember long CLI commands
+// - scripts can call bundlers, test tools, linters, and deployment steps
+
+// Typical workflow:
+// 1. npm install
+// 2. npm run dev
+// 3. make changes
+// 4. npm run build
+// 5. npm test
+
+console.log(
+  "NPM scripts example file — see README and 03_Npm_Scripts.md for more details.",
+);

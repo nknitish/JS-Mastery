@@ -1,7 +1,7 @@
 // https://javascript.info/promise-basics
 
 let promise = new Promise(function (resolve, reject) {
-  setTimeout(() => reject("done!"), 1000);
+  setTimeout(() => resolve("done!"), 1000);
 });
 
 // resolve runs the first function in .then
