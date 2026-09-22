@@ -18,9 +18,9 @@ const exampleElement = {
   style: {},
   getBoundingClientRect() {
     return { width: 100, height: 50 };
-  }
+  },
 };
 
 updateElement(exampleElement, 200);
-console.log('Rendered size', measureElement(exampleElement));
-console.log('Avoid repeated layout reads inside loops to prevent thrashing.');
+console.log("Rendered size", measureElement(exampleElement));
+console.log("Avoid repeated layout reads inside loops to prevent thrashing.");

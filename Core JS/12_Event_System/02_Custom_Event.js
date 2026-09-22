@@ -6,17 +6,38 @@ function emitCustomEvent(target, eventName, detail) {
     bubbles: true,
     cancelable: true,
   });
+
   target.dispatchEvent(event);
 }
 
-const target = document.createElement('div');
-target.addEventListener('user:update', (event) => {
-  console.log('Custom event received:', event.detail);
+const target = document.createElement("div");
+
+target.addEventListener("user:update", (event) => {
+  console.log("Custom event received:", event.detail);
 });
 
-emitCustomEvent(target, 'user:update', { id: 1, status: 'active' });
+emitCustomEvent(target, "user:update", { id: 1, status: "active" });
+
+// Event bubbling with custom events
+const parent = document.createElement("div");
+const child = document.createElement("button");
+
+parent.appendChild(child);
+document.body.appendChild(parent);
+
+parent.addEventListener("user:update", (event) => {
+  console.log("parent caught custom event:", event.detail);
+});
+
+child.addEventListener("click", () => {
+  emitCustomEvent(child, "user:update", { id: 99, status: "clicked" });
+});
+
+// Uncomment to trigger manually:
+// child.click();
 
 // Notes:
-// - Use custom events to publish state changes inside the DOM tree.
-// - `bubbles` can propagate the event through ancestor nodes.
-// - `cancelable` allows event listeners to call event.preventDefault().
+// - Custom events help communicate changes between components.
+// - Use bubbles: true when you want the event to travel upward.
+// - Use cancelable: true when the event should be preventable.
+// - Use event.detail to pass custom payload data.

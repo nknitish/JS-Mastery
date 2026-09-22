@@ -26,7 +26,7 @@ function memoize(fn) {
 }
 
 function slowMultiply(a, b) {
-  console.log('computing');
+  console.log("computing");
   return a * b;
 }
 
